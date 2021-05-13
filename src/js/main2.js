@@ -1,3 +1,8 @@
+/* 
+==================================================
+Javascript compiled to dist
+===================================================
+*/
 const APIURL = "https://api.themoviedb.org/3/";
 const ajaxHTML = document.getElementById('ajax-data');
 let genre = 0;
@@ -16,14 +21,18 @@ searchForm.addEventListener("click", function(e){
   year = document.getElementById('year').value;
   rating = document.getElementById("rating").value;
   querySearch = document.getElementById("querySearch").value;
-
   getPosts(querySearch,  type, genre, rating, year);
 });
 
 
 function getPosts(querySearch, type, genre = 0, rating = 1, year = "") {
+  if(type == 'movie'){
+    yearQuery = "year";
+  }else{
+  yearQuery = "first_air_date_year"
+}
    ajaxHTML.innerHTML = '';
-  fetch(`${APIURL}search/${type}?api_key=7682ae2ffb72cd97f7a33b00bf175475&query=${querySearch}`)
+  fetch(`${APIURL}search/${type}?api_key=7682ae2ffb72cd97f7a33b00bf175475&query=${querySearch}&${yearQuery}=${year}`)
   .then(response => response.json())
   .then(posts => {
   console.log(posts);
@@ -38,7 +47,7 @@ function getPosts(querySearch, type, genre = 0, rating = 1, year = "") {
             yearQuery = post.first_air_date; 
           }
         
-    if((post.genre_ids.includes(parseInt(genre)) || genre == 0)  && (year == yearQuery.substring(0,4) || year == "") && (rating <= post.vote_average)){
+    if((post.genre_ids.includes(parseInt(genre)) || genre == 0) && (rating <= post.vote_average)){
       ajaxHTML.appendChild(renderPosts(post));
       addModal(post);
     }

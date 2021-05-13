@@ -1,3 +1,10 @@
+/* 
+=============================================
+ Go to main2.js 
+ This file is not compiled to dist
+==============================================
+*/
+
 const APIURL = "https://api.themoviedb.org/3/";
 const ajaxHTML = document.getElementById('ajax-data');
 let genre = '';
